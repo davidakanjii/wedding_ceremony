@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taiwo & David | The Wedding</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --burnt-orange: #CC5500;
+            --sea-green: #2E8B57;
+            --cream: #FAF9F6;
+            --dark-text: #333;
+            --gold: #D4AF37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Georgia', serif;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-in-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- COUNTDOWN --- */
+        .countdown {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .time-box small {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            color: var(--burnt-orange);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--sea-green);
+        }
+
+        /* --- INTRO & FAMILIES --- */
+        .intro-text {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .names-large {
+            font-size: 3rem;
+            color: var(--sea-green);
+            margin: 20px 0;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        /* --- OUR MOMENT (Story Container) --- */
+        .story-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        /* --- SLIDESHOW CAROUSEL STYLES --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            /* Taller height for portrait photos */
+            height: 850px; 
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            margin-top: 30px;
+            background-color: #fff; 
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* CONTAIN ensures the full image is visible */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center; 
+            opacity: 0;
+            transform: scale(1.05); 
+            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+            z-index: 1;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        /* Navigation Buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(204, 85, 0, 0.5); /* Semi-transparent burnt orange */
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+        
+        .carousel-btn:hover {
+            background-color: rgba(204, 85, 0, 1); 
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+
+        /* --- SCHEDULE --- */
+        .event-card {
+            background: white;
+            border-left: 5px solid var(--burnt-orange);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+        
+        .event-card.trad {
+            border-left: 5px solid var(--sea-green);
+        }
+
+        .event-card h3 {
+            text-align: left;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .map-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--sea-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .map-btn:hover {
+            background-color: var(--burnt-orange);
+        }
+
+        /* --- COLORS --- */
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .color-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* --- GIFT & SUPPORT --- */
+        .gift-section {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 20px;
+            border: 2px dashed var(--gold);
+        }
+
+        .bank-card {
+            background-color: var(--cream);
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 500px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+
+        .copy-btn {
+            background-color: var(--burnt-orange);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* --- RSVP FORM STYLES --- */
+        .rsvp-form {
+            max-width: 600px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background-color: var(--burnt-orange);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            background-color: #e66000;
+        }
+
+        .rsvp-box {
+            background-color: var(--sea-green);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+        }
+        
+        .rsvp-box a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .names-large { font-size: 2rem; }
+            .time-box span { font-size: 1.5rem; }
+            /* MOBILE HEIGHT ADJUSTMENT */
+            .carousel-container { height: 550px; }
+            .carousel-btn { width: 40px; height: 40px; font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <p>Save the Date</p>
+        <h1>Taiwo & David</h1>
+        <p>April 11, 2026</p>
+        
+        <div class="countdown" id="countdown">
+            </div>
+    </header>
+
+    <section class="reveal">
+        <h2 class="section-title">We Are Getting Married!</h2>
+        <div class="intro-text">
+            <p>The families of</p>
+            <p><strong>Mr. & Mrs. Olabimtan</strong> <br>and<br> <strong>Mr. & Mrs. Akanji</strong></p>
+            <p>Cordially invite you to the Wedding Ceremony of their children</p>
+            <div class="names-large">Taiwo & David</div>
+            <p>We can't wait to celebrate our love with you.</p>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <h2 class="section-title">Our Moment</h2>
+        <div class="story-container">
+            <h3>How We Met</h3>
+            <p><em>(Replace this placeholder text with your actual story).</em> It started with a simple hello, and turned into a lifetime of adventure. From our first date to the day David proposed, every moment has been a blessing.</p>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel-slide active" style="background-image: url('David 1.jpg');"></div>
+            <div class="carousel-slide" style="background-image: url('Taiwo 1.png');"></div>
+            <div class="carousel-slide" style="background-image: url('David 2.png');"></div>
+            <div class="carousel-slide" style="background-image: url('Taiwo 2.png');"></div>
+
+            <button class="carousel-btn prev-btn">❮</button>
+            <button class="carousel-btn next-btn">❯</button>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <h2 class="section-title">Order of Events</h2>
+        
+        <div class="event-card">
+            <h3>💍 White Wedding Ceremony</h3>
+            <div class="detail-row">📅 Saturday, 11th April 2026</div>
+            <div class="detail-row">⏰ 9:00 AM</div>
+            <div class="detail-row">📍 <strong>Garden Park</strong>, The Purpose Hotels & Resorts</div>
+            <div class="detail-row">🗺️ Golden Jubilee Estate, Mowe, Ogun State</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Purpose+Hotels+and+Resorts+Mowe" target="_blank" class="map-btn">View Map</a>
+        </div>
+
+        <div class="event-card trad">
+            <h3>🥁 Traditional Wedding</h3>
+            <div class="detail-row">📅 Saturday, 11th April 2026</div>
+            <div class="detail-row">⏰ 11:00 AM</div>
+            <div class="detail-row">📍 <strong>Peace Hall</strong>, The Purpose Hotels & Resorts</div>
+            <div class="detail-row">🗺️ Golden Jubilee Estate, Mowe, Ogun State</div>
+        </div>
+
+        <div class="event-card">
+            <h3>🍽️ Reception</h3>
+            <p>Follows Immediately @ Peace Hall, The Purpose Hotels & Resorts</p>
+        </div>
+
+        <h3 style="margin-top: 40px;">Colors of the Day</h3>
+        <div class="color-palette">
+            <div class="color-circle" style="background-color: var(--burnt-orange);">Burnt Orange</div>
+            <div class="color-circle" style="background-color: var(--sea-green);">Sea Green</div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <h2 class="section-title">Gift & Support</h2>
+        <div class="gift-section">
+            <p>Your presence is the greatest gift. However, if you wish to support us with a token, please use the details below.</p>
+            
+            <div class="bank-card">
+                <h3>DAVID AKANJI</h3>
+                <p>Bank: <strong>PREMIUM TRUST BANK</strong></p>
+                <p class="acct-num" id="davidAcct">0101039549</p>
+                <button class="copy-btn" onclick="copyText('davidAcct')">Copy Account Number</button>
+            </div>
+
+            <div class="bank-card">
+                <h3>Olabimtan Taiwo Mathinda</h3>
+                <p>Bank: <strong>FCMB</strong></p>
+                <p class="acct-num" id="taiwoAcct">1002071512</p>
+                <button class="copy-btn" onclick="copyText('taiwoAcct')">Copy Account Number</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <h2 class="section-title">R.S.V.P.</h2>
+        <div class="rsvp-box">
+            <p>Strictly by Invitation. Please confirm your seat below so we can plan for your reception.</p>
+            
+            <form name="rsvp" method="POST" data-netlify="true" class="rsvp-form">
+                
+                <div class="form-group">
+                    <label for="name">Your Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="E.g. Mr. John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number (WhatsApp)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="080..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="attending">Will you be attending?</label>
+                    <select id="attending" name="attending">
+                        <option value="Yes">Yes, I will be there! 💍</option>
+                        <option value="No">No, sending prayers from afar 🙏</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="guests">Total Number of Seats to Reserve</label>
+                    <select id="guests" name="guests">
+                        <option value="1">Just me (1)</option>
+                        <option value="2">Me + 1 (2)</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Prayers for the Couple</label>
+                    <textarea id="message" name="message" rows="3" placeholder="Write your well wishes here..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Confirm RSVP</button>
+            </form>
+
+            <p style="margin-top: 30px; font-size: 0.9rem;">Or call for inquiries:</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <a href="tel:+2347030343362">David: +234 703 034 3362</a>
+                <a href="tel:+2347065248121">Kenny: +234 706 524 8121</a>
+                <a href="tel:+2348100162883">Nafiu: +234 810 016 2883</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Taiwo & David's Wedding. Built with ❤️.</p>
+    </footer>
+
+    <script>
+        // --- COUNTDOWN TIMER ---
+        const weddingDate = new Date("April 11, 2026 09:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `
+                <div class="time-box"><span>${days}</span><small>Days</small></div>
+                <div class="time-box"><span>${hours}</span><small>Hours</small></div>
+                <div class="time-box"><span>${minutes}</span><small>Mins</small></div>
+                <div class="time-box"><span>${seconds}</span><small>Secs</small></div>
+            `;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "TODAY IS THE DAY!";
+            }
+        }, 1000);
+
+        // --- SCROLL ANIMATION ---
+        window.addEventListener('scroll', reveal);
+
+        function reveal(){
+            var reveals = document.querySelectorAll('.reveal');
+            for(var i = 0; i < reveals.length; i++){
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+
+                if(revealtop < windowheight - revealpoint){
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        reveal(); // Trigger once on load
+
+        // --- COPY TO CLIPBOARD ---
+        function copyText(elementId) {
+            var textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                alert('Account number copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        // --- SLIDESHOW LOGIC ---
+        const slides = document.querySelectorAll('.carousel-slide');
+        const nextBtn = document.querySelector('.next-btn');
+        const prevBtn = document.querySelector('.prev-btn');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetTimer();
+        });
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        function startTimer() {
+            slideInterval = setInterval(nextSlide, 5000); 
+        }
+
+        function resetTimer() {
+            clearInterval(slideInterval);
+            startTimer();
+        }
+
+        startTimer();
+    </script>
+</body>
+</html>
