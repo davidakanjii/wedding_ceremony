@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taiwo & David | The Wedding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS VARIABLES & RESET --- */
         :root {
             --burnt-orange: #CC5500;
             --sea-green: #2E8B57;
@@ -14,28 +14,93 @@
             --gold: #D4AF37;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--cream);
             color: var(--dark-text);
             overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        h1, h2, h3 {
-            font-family: 'Georgia', serif;
-            text-align: center;
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; text-align: center; }
+        p { line-height: 1.6; text-align: center; margin-bottom: 1rem; font-family: 'Montserrat', sans-serif; font-weight: 300; }
+
+        /* --- NAV --- */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(250, 249, 246, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
         }
 
-        p {
-            line-height: 1.6;
-            text-align: center;
-            margin-bottom: 1rem;
+        .sticky-nav.visible { transform: translateY(0); }
+
+        .nav-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--burnt-orange);
+            font-style: italic;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            border-radius: 20px;
+            transition: all 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: var(--burnt-orange);
+            color: white;
+        }
+
+        /* Hamburger for mobile */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark-text);
+            transition: all 0.3s;
         }
 
         /* --- ANIMATIONS --- */
@@ -44,13 +109,9 @@
             transform: translateY(30px);
             transition: all 0.8s ease-in-out;
         }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- HERO SECTION --- */
+        /* --- HERO --- */
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
@@ -65,20 +126,9 @@
             padding: 20px;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        .hero p {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* --- COUNTDOWN --- */
         .countdown {
             display: flex;
             gap: 20px;
@@ -88,7 +138,7 @@
         }
 
         .time-box {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
             backdrop-filter: blur(5px);
             padding: 15px 25px;
             border-radius: 10px;
@@ -96,18 +146,10 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .time-box span {
-            display: block;
-            font-size: 2rem;
-            font-weight: bold;
-        }
+        .time-box span { display: block; font-size: 2rem; font-weight: bold; }
+        .time-box small { font-size: 0.8rem; text-transform: uppercase; }
 
-        .time-box small {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        /* --- SECTIONS GENERAL --- */
+        /* --- SECTIONS --- */
         section {
             padding: 60px 20px;
             max-width: 1000px;
@@ -133,21 +175,11 @@
             background-color: var(--sea-green);
         }
 
-        /* --- INTRO & FAMILIES --- */
-        .intro-text {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        /* --- INTRO --- */
+        .intro-text { font-size: 1.2rem; max-width: 700px; margin: 0 auto; }
+        .names-large { font-size: 3rem; color: var(--sea-green); margin: 20px 0; font-family: 'Cormorant Garamond', serif; font-style: italic; }
 
-        .names-large {
-            font-size: 3rem;
-            color: var(--sea-green);
-            margin: 20px 0;
-            font-family: 'Brush Script MT', cursive;
-        }
-
-        /* --- OUR MOMENT (Story Container) --- */
+        /* --- STORY --- */
         .story-container {
             background: white;
             padding: 40px;
@@ -156,45 +188,38 @@
             margin-bottom: 40px;
         }
 
-        /* --- SLIDESHOW CAROUSEL STYLES --- */
+        /* --- CAROUSEL --- */
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 850px; 
+            height: 850px;
             overflow: hidden;
             border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             margin-top: 30px;
-            background-color: #fff; 
+            background-color: #fff;
         }
 
         .carousel-slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: center center; 
+            background-position: center;
             opacity: 0;
-            transform: scale(1.05); 
+            transform: scale(1.05);
             transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
             z-index: 1;
         }
 
-        .carousel-slide.active {
-            opacity: 1;
-            transform: scale(1);
-            z-index: 2;
-        }
+        .carousel-slide.active { opacity: 1; transform: scale(1); z-index: 2; }
 
-        /* Navigation Buttons */
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(204, 85, 0, 0.5);
+            background-color: rgba(204,85,0,0.5);
             color: white;
             border: none;
             width: 50px;
@@ -209,45 +234,26 @@
             justify-content: center;
             opacity: 0.7;
         }
-        
-        .carousel-btn:hover {
-            background-color: rgba(204, 85, 0, 1); 
-            opacity: 1;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
+
+        .carousel-btn:hover { background-color: rgba(204,85,0,1); opacity: 1; transform: translateY(-50%) scale(1.1); }
         .prev-btn { left: 20px; }
         .next-btn { right: 20px; }
-
 
         /* --- SCHEDULE --- */
         .event-card {
             background: white;
             border-left: 5px solid var(--burnt-orange);
             padding: 30px;
-            
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: left;
-        }
-        
-        .event-card.trad {
-            border-left: 5px solid var(--sea-green);
+            margin-bottom: 20px;
         }
 
-        .event-card h3 {
-            text-align: left;
-            color: var(--dark-text);
-            margin-bottom: 10px;
-        }
+        .event-card.trad { border-left: 5px solid var(--sea-green); }
+        .event-card h3 { text-align: left; color: var(--dark-text); margin-bottom: 10px; }
+        .detail-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 1.1rem; }
 
-        .detail-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-        
         .map-btn {
             display: inline-block;
             margin-top: 15px;
@@ -260,17 +266,9 @@
             transition: background 0.3s;
         }
 
-        .map-btn:hover {
-            background-color: var(--burnt-orange);
-        }
+        .map-btn:hover { background-color: var(--burnt-orange); }
 
-        /* --- COLORS --- */
-        .color-palette {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
+        .color-palette { display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap; }
 
         .color-circle {
             width: 100px;
@@ -282,9 +280,119 @@
             color: white;
             font-weight: bold;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 0.85rem;
+            text-align: center;
         }
 
-        /* --- GIFT & SUPPORT --- */
+        /* --- HOTELS SECTION --- */
+        .hotels-intro {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0ede8;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+        }
+
+        .hotel-badge {
+            background: var(--burnt-orange);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            display: inline-block;
+            border-radius: 0 0 8px 0;
+        }
+
+        .hotel-badge.venue { background: var(--sea-green); }
+
+        .hotel-info { padding: 20px 22px 24px; }
+
+        .hotel-info h3 {
+            text-align: left;
+            font-size: 1.25rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+
+        .hotel-info .hotel-desc {
+            text-align: left;
+            font-size: 0.87rem;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .hotel-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .hotel-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 14px;
+            border-radius: 25px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .hotel-btn-primary {
+            background-color: var(--burnt-orange);
+            color: white;
+        }
+
+        .hotel-btn-primary:hover { background-color: #b34900; }
+
+        .hotel-btn-outline {
+            background-color: transparent;
+            color: var(--sea-green);
+            border: 1.5px solid var(--sea-green);
+        }
+
+        .hotel-btn-outline:hover { background-color: var(--sea-green); color: white; }
+
+        .hotel-distance {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.78rem;
+            color: #888;
+            margin-bottom: 14px;
+        }
+
+        /* --- GIFT --- */
         .gift-section {
             background-color: #fff;
             padding: 50px;
@@ -299,7 +407,6 @@
             max-width: 500px;
             border-radius: 10px;
             border: 1px solid #ddd;
-            position: relative;
         }
 
         .copy-btn {
@@ -312,41 +419,23 @@
             margin-top: 10px;
             font-size: 0.9rem;
         }
-        
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
 
-        /* --- RSVP FORM STYLES --- */
+        .copy-btn:active { transform: scale(0.95); }
+
+        /* --- RSVP --- */
         .rsvp-form {
             max-width: 600px;
             margin: 30px auto;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             padding: 20px;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .form-group input, 
-        .form-group select, 
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: white; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px; border: none; border-radius: 5px; font-size: 1rem;
         }
 
         .submit-btn {
@@ -362,10 +451,7 @@
             font-weight: bold;
         }
 
-        .submit-btn:hover {
-            transform: scale(1.02);
-            background-color: #e66000;
-        }
+        .submit-btn:hover { transform: scale(1.02); background-color: #e66000; }
 
         .rsvp-box {
             background-color: var(--sea-green);
@@ -373,7 +459,7 @@
             padding: 40px;
             border-radius: 15px;
         }
-        
+
         .rsvp-box a {
             color: #fff;
             text-decoration: none;
@@ -397,23 +483,62 @@
             .hero h1 { font-size: 2.5rem; }
             .names-large { font-size: 2rem; }
             .time-box span { font-size: 1.5rem; }
-            .carousel-container { height: 550px; }
+            .carousel-container { height: 400px; }
             .carousel-btn { width: 40px; height: 40px; font-size: 18px; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(250,249,246,0.98);
+                padding: 15px 20px 20px;
+                border-top: 1px solid #eee;
+                gap: 5px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 10px 14px; font-size: 0.8rem; }
+            .nav-toggle { display: flex; }
+
+            .hotel-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
+    <!-- STICKY NAVIGATION -->
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="nav-inner">
+            <div class="nav-logo">Taiwo & David</div>
+            <div class="nav-toggle" id="navToggle" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" onclick="closeMenu()">Home</a></li>
+                <li><a href="#invite" onclick="closeMenu()">Invite</a></li>
+                <li><a href="#story" onclick="closeMenu()">Our Story</a></li>
+                <li><a href="#schedule" onclick="closeMenu()">Events</a></li>
+                <li><a href="#hotels" onclick="closeMenu()">Hotels</a></li>
+                <li><a href="#gift" onclick="closeMenu()">Gift</a></li>
+                <li><a href="#rsvp" onclick="closeMenu()">RSVP</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="hero">
         <p>Save the Date</p>
         <h1>Taiwo & David</h1>
         <p>April 11, 2026</p>
-        
-        <div class="countdown" id="countdown">
-            </div>
+        <div class="countdown" id="countdown"></div>
     </header>
 
-    <section class="reveal">
+    <!-- INVITE -->
+    <section class="reveal" id="invite">
         <h2 class="section-title">We Are Getting Married!</h2>
         <div class="intro-text">
             <p>The families of</p>
@@ -424,66 +549,43 @@
         </div>
     </section>
 
-    <section class="reveal">
+    <!-- OUR STORY -->
+    <section class="reveal" id="story">
         <h2 class="section-title">Our Moment</h2>
-        
+
         <div style="display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px;">
-            
             <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
                 <h3 style="color: var(--sea-green);">💚 My Husband and I's Story - Taiwo's View</h3>
-                <p style="text-align: justify;">
-                    I met David during my NYSC program in Benin in 2018, and he just struck me as a quiet and influential person who could help me with my CDS attendance and clearance, not knowing life had something else in store for both of us. We remained platonic friends throughout our NYSC program. When the NYSC program finished, we went our separate ways, with him checking up on me once in a while via social media.
-                </p>
-                <p style="text-align: justify;">
-                    Fast forward to 2022, David reached out to me and asked for my location. We found out we were in the same city, and then came the pursuit for that one date. He was always checking up on me from time to time and asking for that one date, but I, on the other hand, was always busy and, in between, playing hard to get. Lol.
-                </p>
-                <p style="text-align: justify;">
-                    Then in 2023, I had just gotten my heartbroken 6 months prior, and I woke up one morning and decided to go for this date. Let this man let me rest. We agreed on the day and location. Fast forward to the day, I was extremely late, only because my village people were helping me find all the reasons not to go for that date, but he waited patiently for me.
-                </p>
-                <p style="text-align: justify;">
-                    After two extra hours, I arrived at the location, and when I saw him, my life changed forever. I was captivated immediately. I wouldn't say it was love at first sight, but it was attraction at first sight because, man, he is sooo fine. Like, my husband is the most handsome man I have ever seen, and it drew my attention. Immediately, I changed my walking step and added more steeze as I was wearing a green dress and black heels. As for me, no bad now.
-                </p>
-                <p style="text-align: justify;">
-                    And we greeted and hugged. Mind you, I was seeing him for the first time after 3 years. We talked about everything in general, from Benin to life after NYSC, to work, to everything happening in Nigeria. We talked and talked. Then came the serious talk. After like three hours of talking, he said he wanted a wife, like a wife, not just a relationship. He wanted to start a family. In my head, I was like, "Gbagaun, bros. I know you're fine and all, but isn't marriage a bit far-fetched?" Then I automatically signed out of the conversation.
-                </p>
-                <p style="text-align: justify;">
-                    Then he got talking about what he needed in a woman, and he mentioned the genotype test. Funny enough, I had never been tested—never! Then I became interested in the topic again, and out of the blue, we decided to go get tested together the next weekend. The next weekend came, and our results were out, and guess what? We were compatible and could actually live together happily ever after. And that's exactly what we are about to do, three years after.
-                </p>
+                <p style="text-align: justify;">I met David during my NYSC program in Benin in 2018, and he just struck me as a quiet and influential person who could help me with my CDS attendance and clearance, not knowing life had something else in store for both of us. We remained platonic friends throughout our NYSC program. When the NYSC program finished, we went our separate ways, with him checking up on me once in a while via social media.</p>
+                <p style="text-align: justify;">Fast forward to 2022, David reached out to me and asked for my location. We found out we were in the same city, and then came the pursuit for that one date. He was always checking up on me from time to time and asking for that one date, but I, on the other hand, was always busy and, in between, playing hard to get. Lol.</p>
+                <p style="text-align: justify;">Then in 2023, I had just gotten my heartbroken 6 months prior, and I woke up one morning and decided to go for this date. Let this man let me rest. We agreed on the day and location. Fast forward to the day, I was extremely late, only because my village people were helping me find all the reasons not to go for that date, but he waited patiently for me.</p>
+                <p style="text-align: justify;">After two extra hours, I arrived at the location, and when I saw him, my life changed forever. I was captivated immediately. I wouldn't say it was love at first sight, but it was attraction at first sight because, man, he is sooo fine. Like, my husband is the most handsome man I have ever seen, and it drew my attention. Immediately, I changed my walking step and added more steeze as I was wearing a green dress and black heels. As for me, no bad now.</p>
+                <p style="text-align: justify;">And we greeted and hugged. Mind you, I was seeing him for the first time after 3 years. We talked about everything in general, from Benin to life after NYSC, to work, to everything happening in Nigeria. We talked and talked. Then came the serious talk. After like three hours of talking, he said he wanted a wife, like a wife, not just a relationship. He wanted to start a family. In my head, I was like, "Gbagaun, bros. I know you're fine and all, but isn't marriage a bit far-fetched?" Then I automatically signed out of the conversation.</p>
+                <p style="text-align: justify;">Then he got talking about what he needed in a woman, and he mentioned the genotype test. Funny enough, I had never been tested—never! Then I became interested in the topic again, and out of the blue, we decided to go get tested together the next weekend. The next weekend came, and our results were out, and guess what? We were compatible and could actually live together happily ever after. And that's exactly what we are about to do, three years after.</p>
             </div>
 
             <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
                 <h3 style="color: var(--burnt-orange);">💛 David's View of Taiwo</h3>
-                <p style="text-align: justify;">
-                    Honestly, I noticed Mathinda before we even spoke. There was just something about her during NYSC — the way she carried herself, calm and unbothered, like she had already figured out things the rest of us were still working on. I didn't say much at the time. I just paid attention.
-                </p>
-                <p style="text-align: justify;">
-                    When we eventually started talking, it was easy. No awkwardness, no trying too hard. It just flowed. And the more we talked, the more I realised this was not just somebody I enjoyed talking to, this was somebody I wanted to keep around.
-                </p>
-                <p style="text-align: justify;">
-                    Life separated us after NYSC, as it usually does. But I never really stopped thinking about her. And when we reconnected in 2022 and found out we were in the same city, I knew I wasn't letting that chance go without a fight.
-                </p>
-                <p style="text-align: justify;">
-                    Three years later, I can say with full confidence, she is everything I hoped she would be and more. She is strong in ways she doesn't even realise. She loves deeply. She makes me want to show up better every single day, not because she pressures me to, but just because of who she is.
-                </p>
-                <p style="text-align: justify;">
-                    Choosing her has been one of the easiest decisions of my life, and I look forward to choosing her again and again, in every season, for the rest of my life.
-                </p>
+                <p style="text-align: justify;">Honestly, I noticed Mathinda before we even spoke. There was just something about her during NYSC — the way she carried herself, calm and unbothered, like she had already figured out things the rest of us were still working on. I didn't say much at the time. I just paid attention.</p>
+                <p style="text-align: justify;">When we eventually started talking, it was easy. No awkwardness, no trying too hard. It just flowed. And the more we talked, the more I realised this was not just somebody I enjoyed talking to, this was somebody I wanted to keep around.</p>
+                <p style="text-align: justify;">Life separated us after NYSC, as it usually does. But I never really stopped thinking about her. And when we reconnected in 2022 and found out we were in the same city, I knew I wasn't letting that chance go without a fight.</p>
+                <p style="text-align: justify;">Three years later, I can say with full confidence, she is everything I hoped she would be and more. She is strong in ways she doesn't even realise. She loves deeply. She makes me want to show up better every single day, not because she pressures me to, but just because of who she is.</p>
+                <p style="text-align: justify;">Choosing her has been one of the easiest decisions of my life, and I look forward to choosing her again and again, in every season, for the rest of my life.</p>
             </div>
-
         </div>
-        
+
         <div class="carousel-container">
             <div class="carousel-slide active" style="background-image: url('David 1.jpg');"></div>
             <div class="carousel-slide" style="background-image: url('Taiwo 1.png');"></div>
-
             <button class="carousel-btn prev-btn">❮</button>
             <button class="carousel-btn next-btn">❯</button>
         </div>
     </section>
 
-    <section class="reveal">
+    <!-- SCHEDULE -->
+    <section class="reveal" id="schedule">
         <h2 class="section-title">Order of Events</h2>
-        
+
         <div class="event-card">
             <h3>💍 White Wedding Ceremony</h3>
             <div class="detail-row">📅 Saturday, 11th April 2026</div>
@@ -513,11 +615,80 @@
         </div>
     </section>
 
-    <section class="reveal">
+    <!-- HOTELS -->
+    <section class="reveal" id="hotels">
+        <h2 class="section-title">Hotels & Accommodation</h2>
+        <p class="hotels-intro">
+            We want your stay to be as comfortable as possible! Below are recommended hotels near the venue. The venue itself, The Purpose Hotels & Resorts, is where the wedding takes place — you can book a room and stay right on-site. Click "Book / Reserve" to go directly to each hotel's location page.
+        </p>
+
+        <div class="hotels-grid">
+
+            <!-- The Purpose Hotels - VENUE -->
+            <div class="hotel-card">
+                <span class="hotel-badge venue">⭐ Wedding Venue</span>
+                <div class="hotel-info">
+                    <h3>The Purpose Hotels & Resorts</h3>
+                    <div class="hotel-distance">📍 Golden Jubilee Estate, Mowe, Ogun State</div>
+                    <p class="hotel-desc">Our wedding venue! Stay right where the celebration is happening. Perfect for guests who want the full experience without worrying about transport.</p>
+                    <div class="hotel-actions">
+                        <a href="https://www.google.com/maps/place/THE+PURPOSE+HOTELS+%26+RESORTS/@6.8442716,3.4463564,3a,75y,90t/data=!3m8!1e2!3m6!1sAF1QipNrcnM0-TLGqCRmmyAjUnEYebwtm6UTQBeTbHI!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipNrcnM0-TLGqCRmmyAjUnEYebwtm6UTQBeTbHI%3Dw129-h86-k-no!7i4728!8i3152!4m29!1m20!1m15!4m14!1m6!1m2!1s0x103bb97b2920f195:0x79664a9b79e9f568!2sAsolo+International+School,+120+Ofada+Rd,+Ogun,+Owode+110113,+Ogun+State!2m2!1d3.399375!2d6.844593!1m6!1m2!1s0x103bc77cdcf50645:0x1f34bd1425e3762d!2sTHE+PURPOSE+HOTELS+%26+RESORTS,+Jubilee+Golden+Estate,+Mowe,+Loburo+110115,+Ogun+State!2m2!1d3.4462629!2d6.8441881!2m3!1sHotels!3m1!5e2!3m7!1s0x103bc77cdcf50645:0x1f34bd1425e3762d!8m2!3d6.8441881!4d3.4462629!10e5!15sCgZIb3RlbHNaCCIGaG90ZWxzkgEMcmVzb3J0X2hvdGVsmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVVIyT1hNdE1VNUJFQUXgAQD6AQQIABA3!16s%2Fg%2F11t604hjp6?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="hotel-btn hotel-btn-primary">📍 Book / Reserve</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Purpose+Hotels+and+Resorts+Mowe" target="_blank" class="hotel-btn hotel-btn-outline">🗺️ Directions</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rubam Hotel -->
+            <div class="hotel-card">
+                <span class="hotel-badge">🏨 Nearby Hotel</span>
+                <div class="hotel-info">
+                    <h3>Rubam Hotel and Suites</h3>
+                    <div class="hotel-distance">📍 Mowe, Ogun State</div>
+                    <p class="hotel-desc">A comfortable and well-regarded hotel close to the venue. A great option for guests looking for quality accommodation nearby.</p>
+                    <div class="hotel-actions">
+                        <a href="https://www.google.com/maps/place/Rubam+Hotel+and+Suites/@6.8374162,3.441001,3a,89y,90t/data=!3m8!1e2!3m6!1sAF1QipPCYZALn5uKcf6iXZcwJBfiMzFB8dr3EwYtGv2s!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipPCYZALn5uKcf6iXZcwJBfiMzFB8dr3EwYtGv2s%3Dw152-h86-k-no!7i1000!8i563!4m29!1m20!1m15!4m14!1m6!1m2!1s0x103bb97b2920f195:0x79664a9b79e9f568!2sAsolo+International+School,+120+Ofada+Rd,+Ogun,+Owode+110113,+Ogun+State!2m2!1d3.399375!2d6.844593!1m6!1m2!1s0x103bc77cdcf50645:0x1f34bd1425e3762d!2sTHE+PURPOSE+HOTELS+%26+RESORTS,+Jubilee+Golden+Estate,+Mowe,+Loburo+110115,+Ogun+State!2m2!1d3.4462629!2d6.8441881!2m3!1sHotels!3m1!5e2!3m7!1s0x103bc734b24483dd:0x486ed70018f035f8!8m2!3d6.8372962!4d3.4410079!10e5!15sCgZIb3RlbHNaCCIGaG90ZWxzkgEFaG90ZWyaASRDaFpEU1VoTk1HOW5TMFZKUTBGblNVTmZkWFZ0Ym1kM1JSQULgAQD6AQQIABBG!16s%2Fg%2F11kr9_7vwl?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="hotel-btn hotel-btn-primary">📍 Book / Reserve</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Rubam+Hotel+and+Suites+Mowe+Ogun" target="_blank" class="hotel-btn hotel-btn-outline">🗺️ Directions</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B.Pipple's Suites -->
+            <div class="hotel-card">
+                <span class="hotel-badge">🏨 Nearby Hotel</span>
+                <div class="hotel-info">
+                    <h3>B.Pipple's Suites</h3>
+                    <div class="hotel-distance">📍 Mowe, Ogun State</div>
+                    <p class="hotel-desc">A lovely suite-style accommodation in the Mowe area. Ideal for guests who prefer a boutique stay within easy reach of the venue.</p>
+                    <div class="hotel-actions">
+                        <a href="https://www.google.com/maps/place/B.Pipple's+Suites/@6.8335928,3.4382139,3a,75y,90t/data=!3m8!1e2!3m6!1sCIHM0ogKEICAgIDitOTDvAE!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHVAwepwoZBjIGUqXEhElOu9jN9ree2u1SFgPx3MpvLJA7kglnO5nAnLef1Lx9p0-pCJwUzQ5dhj3JKeJcvRvD1YIt0WSCToTjARwMofu2oNtUKdTUUv2MuDqQ6ksX3hODdT4kvKdv-KcQ%3Dw152-h86-k-no!7i4056!8i2280!4m29!1m20!1m15!4m14!1m6!1m2!1s0x103bb97b2920f195:0x79664a9b79e9f568!2sAsolo+International+School,+120+Ofada+Rd,+Ogun,+Owode+110113,+Ogun+State!2m2!1d3.399375!2d6.844593!1m6!1m2!1s0x103bc77cdcf50645:0x1f34bd1425e3762d!2sTHE+PURPOSE+HOTELS+%26+RESORTS,+Jubilee+Golden+Estate,+Mowe,+Loburo+110115,+Ogun+State!2m2!1d3.4462629!2d6.8441881!2m3!1sHotels!3m1!5e2!3m7!1s0x103bc77b63d933ed:0xe293178f13d69ae9!8m2!3d6.8334905!4d3.4381668!10e5!15sCgZIb3RlbHNaCCIGaG90ZWxzkgEFaG90ZWyaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUkNjbkppWjJWQkVBReABAPoBBAgAECY!16s%2Fg%2F11hwgmwssw?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="hotel-btn hotel-btn-primary">📍 Book / Reserve</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=B.Pipple+Suites+Mowe+Ogun" target="_blank" class="hotel-btn hotel-btn-outline">🗺️ Directions</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Don Emilia Royal Hotel -->
+            <div class="hotel-card">
+                <span class="hotel-badge">🏨 Nearby Hotel</span>
+                <div class="hotel-info">
+                    <h3>Don Emilia Royal Hotel</h3>
+                    <div class="hotel-distance">📍 Mowe, Ogun State</div>
+                    <p class="hotel-desc">A royal-themed hotel offering a classic and elegant stay in the Mowe area, perfect for guests who want a touch of grandeur.</p>
+                    <div class="hotel-actions">
+                        <a href="https://www.google.com/maps/place/Don+Emilia+Royal+Hotel/@6.8301114,3.441165,3a,75y/data=!3m8!1e2!3m6!1sAF1QipOgRpyf4YvMQqVXUpSZeGXW1b_3FkbJp0E0mJmw!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipOgRpyf4YvMQqVXUpSZeGXW1b_3FkbJp0E0mJmw%3Dw114-h86-k-no!7i911!8i684!4m32!1m20!1m15!4m14!1m6!1m2!1s0x103bb97b2920f195:0x79664a9b79e9f568!2sAsolo+International+School,+120+Ofada+Rd,+Ogun,+Owode+110113,+Ogun+State!2m2!1d3.399375!2d6.844593!1m6!1m2!1s0x103bc77cdcf50645:0x1f34bd1425e3762d!2sTHE+PURPOSE+HOTELS+%26+RESORTS,+Jubilee+Golden+Estate,+Mowe,+Loburo+110115,+Ogun+State!2m2!1d3.4462629!2d6.8441881!2m3!1sHotels!3m1!5e2!3m7!1s0x103bc73660a7db79:0x97de91ba1f130a41!5m2!4m1!1i2!8m2!3d6.830185!4d3.4411967!10e5!15sCgZIb3RlbHNaCCIGaG90ZWxzkgEFaG90ZWyaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUjRNV0o2YVdaM0VBReABAPoBBAgaEC4!16s%2Fg%2F11cs4mb4hx?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="hotel-btn hotel-btn-primary">📍 Book / Reserve</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Don+Emilia+Royal+Hotel+Mowe+Ogun" target="_blank" class="hotel-btn hotel-btn-outline">🗺️ Directions</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GIFT -->
+    <section class="reveal" id="gift">
         <h2 class="section-title">Gift & Support</h2>
         <div class="gift-section">
-            <p>Your love, prayers, and presence on our special day are all the gifts we could ever ask for. However, should you wish to bless us with a gift, a monetary contribution would be sincerely appreciated. Our dedicated account details are listed below..</p>
-            
+            <p>Your love, prayers, and presence on our special day are all the gifts we could ever ask for. However, should you wish to bless us with a gift, a monetary contribution would be sincerely appreciated. Our dedicated account details are listed below.</p>
+
             <div class="bank-card">
                 <h3>DAVID AKANJI</h3>
                 <p>Bank: <strong>PREMIUM TRUST BANK</strong></p>
@@ -534,23 +705,21 @@
         </div>
     </section>
 
-    <section class="reveal">
+    <!-- RSVP -->
+    <section class="reveal" id="rsvp">
         <h2 class="section-title">R.S.V.P.</h2>
         <div class="rsvp-box">
             <p>Strictly by Invitation. Please confirm your seat below so we can plan for your reception.</p>
-            
+
             <form name="rsvp" method="POST" data-netlify="true" class="rsvp-form">
-                
                 <div class="form-group">
                     <label for="name">Your Full Name</label>
                     <input type="text" id="name" name="name" placeholder="E.g. Mr. John Doe" required>
                 </div>
-
                 <div class="form-group">
                     <label for="phone">Phone Number (WhatsApp)</label>
                     <input type="tel" id="phone" name="phone" placeholder="080..." required>
                 </div>
-
                 <div class="form-group">
                     <label for="attending">Will you be attending?</label>
                     <select id="attending" name="attending">
@@ -558,7 +727,6 @@
                         <option value="No">No, sending prayers from afar 🙏</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="guests">Total Number of Seats to Reserve</label>
                     <select id="guests" name="guests">
@@ -568,12 +736,10 @@
                         <option value="4">4 People</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="message">Prayers for the Couple</label>
                     <textarea id="message" name="message" rows="3" placeholder="Write your well wishes here..."></textarea>
                 </div>
-
                 <button type="submit" class="submit-btn">Confirm RSVP</button>
             </form>
 
@@ -591,62 +757,72 @@
     </footer>
 
     <script>
-        // --- COUNTDOWN TIMER ---
+        // COUNTDOWN
         const weddingDate = new Date("April 11, 2026 09:00:00").getTime();
-
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
             document.getElementById("countdown").innerHTML = `
                 <div class="time-box"><span>${days}</span><small>Days</small></div>
                 <div class="time-box"><span>${hours}</span><small>Hours</small></div>
                 <div class="time-box"><span>${minutes}</span><small>Mins</small></div>
                 <div class="time-box"><span>${seconds}</span><small>Secs</small></div>
             `;
-
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "TODAY IS THE DAY!";
-            }
+            if (distance < 0) { clearInterval(x); document.getElementById("countdown").innerHTML = "TODAY IS THE DAY! 🎉"; }
         }, 1000);
 
-        // --- SCROLL ANIMATION ---
-        window.addEventListener('scroll', reveal);
-
-        function reveal(){
-            var reveals = document.querySelectorAll('.reveal');
-            for(var i = 0; i < reveals.length; i++){
-                var windowheight = window.innerHeight;
-                var revealtop = reveals[i].getBoundingClientRect().top;
-                var revealpoint = 150;
-
-                if(revealtop < windowheight - revealpoint){
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-        reveal();
-
-        // --- COPY TO CLIPBOARD ---
-        function copyText(elementId) {
-            var textToCopy = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(textToCopy).then(function() {
-                alert('Account number copied to clipboard!');
-            }, function(err) {
-                console.error('Could not copy text: ', err);
+        // SCROLL REVEAL
+        window.addEventListener('scroll', revealOnScroll);
+        function revealOnScroll() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 150) el.classList.add('active');
             });
         }
+        revealOnScroll();
 
-        // --- SLIDESHOW LOGIC ---
+        // STICKY NAV
+        const nav = document.getElementById('stickyNav');
+        const hero = document.getElementById('hero');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > hero.offsetHeight * 0.6) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+
+            // Active nav link highlighting
+            const sections = ['hero','invite','story','schedule','hotels','gift','rsvp'];
+            let current = '';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.getBoundingClientRect().top <= 80) current = id;
+            });
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+            });
+        });
+
+        // HAMBURGER MENU
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+        function closeMenu() {
+            document.getElementById('navLinks').classList.remove('open');
+        }
+
+        // COPY TO CLIPBOARD
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => alert('Account number copied!')).catch(() => {});
+        }
+
+        // CAROUSEL
         const slides = document.querySelectorAll('.carousel-slide');
-        const nextBtn = document.querySelector('.next-btn');
-        const prevBtn = document.querySelector('.prev-btn');
         let currentSlide = 0;
         let slideInterval;
 
@@ -656,33 +832,23 @@
             slides[currentSlide].classList.add('active');
         }
 
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
+        document.querySelector('.next-btn').addEventListener('click', () => { showSlide(currentSlide + 1); resetTimer(); });
+        document.querySelector('.prev-btn').addEventListener('click', () => { showSlide(currentSlide - 1); resetTimer(); });
 
-        function prevSlide() {
-            showSlide(currentSlide - 1);
-        }
-
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            resetTimer();
-        });
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            resetTimer();
-        });
-
-        function startTimer() {
-            slideInterval = setInterval(nextSlide, 5000); 
-        }
-
-        function resetTimer() {
-            clearInterval(slideInterval);
-            startTimer();
-        }
-
+        function startTimer() { slideInterval = setInterval(() => showSlide(currentSlide + 1), 5000); }
+        function resetTimer() { clearInterval(slideInterval); startTimer(); }
         startTimer();
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
