@@ -239,6 +239,29 @@
         .prev-btn { left: 20px; }
         .next-btn { right: 20px; }
 
+        /* Carousel dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+            border: none;
+        }
+
+        .carousel-dot.active { background: var(--burnt-orange); }
+
         /* --- SCHEDULE --- */
         .event-card {
             background: white;
@@ -574,11 +597,22 @@
             </div>
         </div>
 
+        <!-- UPDATED CAROUSEL WITH 11 NEW IMAGES -->
         <div class="carousel-container">
-            <div class="carousel-slide active" style="background-image: url('David 1.jpg');"></div>
-            <div class="carousel-slide" style="background-image: url('Taiwo 1.png');"></div>
+            <div class="carousel-slide active" style="background-image: url('IMG_5379.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5380.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5381.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5382.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5383.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5384.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5385.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5386.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5387.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5388.JPG.jpeg');"></div>
+            <div class="carousel-slide" style="background-image: url('IMG_5389.JPG.jpeg');"></div>
             <button class="carousel-btn prev-btn">❮</button>
             <button class="carousel-btn next-btn">❯</button>
+            <div class="carousel-dots" id="carouselDots"></div>
         </div>
     </section>
 
@@ -823,13 +857,30 @@
 
         // CAROUSEL
         const slides = document.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carouselDots');
         let currentSlide = 0;
         let slideInterval;
+
+        // Build dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => { showSlide(i); resetTimer(); });
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateDots() {
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
 
         function showSlide(index) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (index + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
+            updateDots();
         }
 
         document.querySelector('.next-btn').addEventListener('click', () => { showSlide(currentSlide + 1); resetTimer(); });
